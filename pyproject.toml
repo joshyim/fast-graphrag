@@ -20,6 +20,7 @@ hnswlib = "^0.8.0"
 instructor = "^1.6.3"
 requests = "^2.32.3"
 python-dotenv = "^1.0.1"
+circlemind = "^0.0.5.post2"
 
 
 [tool.poetry.group.dev.dependencies]
