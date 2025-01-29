@@ -271,9 +271,12 @@ class TContext(Generic[GTNode, GTEdge, GTHash, GTChunk]):
             for table in csv_tables:
                 for i in range(included_up_to[table], len(csv_tables_row_length[table])):
                     length = csv_tables_row_length[table][i] + 1  # +1 for the newline character
-                    if length <= chars_remainder:  # use up the remainder
+                    if (
+                        (length <= chars_remainder) and (max_chars[table] >= 0)
+                    ):  # use up the remainder (handle -1 differently)
                         included_up_to[table] += 1
                         chars_remainder -= length
+                        break
                     elif length <= max_chars[table]:  # use up the assigned tokens
                         included_up_to[table] += 1
                         max_chars[table] -= length
@@ -306,7 +309,7 @@ class TContext(Generic[GTNode, GTEdge, GTHash, GTChunk]):
                     ]
                 )
             else:
-                context.append("\n#Entities: None\n")
+                context.append("\n## Entities: Not provided\n")
 
             if len(self.relations):
                 context.extend(
@@ -318,12 +321,12 @@ class TContext(Generic[GTNode, GTEdge, GTHash, GTChunk]):
                     ]
                 )
             else:
-                context.append("\n## Relationships: None\n")
+                context.append("\n## Relationships: Not provided\n")
 
             if len(self.chunks):
                 context.extend(["\n## Sources\n", *csv_tables["chunks"][: included_up_to["chunks"]], ""])
             else:
-                context.append("\n## Sources: None\n")
+                context.append("\n## Sources: Not provided\n")
         return "\n".join(context)
 
 

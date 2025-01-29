@@ -22,13 +22,20 @@ grag = GraphRAG(
     entity_types=ENTITY_TYPES,
     config=GraphRAG.Config(
         llm_service=OpenAILLMService(
-            model="your-llm-model", base_url="llm.api.url.com", api_key="your-api-key", mode=instructor.Mode.JSON
+            model="your-llm-model",
+            base_url="llm.api.url.com",
+            api_key="your-api-key",
+            mode=instructor.Mode.JSON,
+            api_version="your-llm-api_version",
+            client="openai or azure"
         ),
         embedding_service=OpenAIEmbeddingService(
             model="your-embedding-model",
             base_url="emb.api.url.com",
             api_key="your-api-key",
             embedding_dim=512,  # the output embedding dim of the chosen model
+            api_version="your-llm-api_version",
+            client="openai or azure"
         ),
     ),
 )

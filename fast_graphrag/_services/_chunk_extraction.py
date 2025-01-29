@@ -62,7 +62,12 @@ class DefaultChunkingService(BaseChunkingService[TChunk]):
 
     async def _extract_chunks(self, data: TDocument) -> List[TChunk]:
         # Sanitise input data:
-        data.data = re.sub(r"[\x00-\x1f\x7f-\x9f]", "", data.data)
+        try:
+            data.data = data.data.encode(errors="replace").decode()
+        except UnicodeDecodeError:
+            # Default to replacing all unrecognised characters with a space
+            data.data = re.sub(r"[\x00-\x09\x11-\x12\x14-\x1f]", " ", data.data)
+
         if len(data.data) <= self._chunk_size:
             chunks = [data.data]
         else:

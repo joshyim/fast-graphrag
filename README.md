@@ -74,7 +74,7 @@ Download a copy of *A Christmas Carol* by Charles Dickens:
 curl https://raw.githubusercontent.com/circlemind-ai/fast-graphrag/refs/heads/main/mock_data.txt > ./book.txt
 ```
 
-Optional: Set the limit for concurrent requests (e.g., to control the number of tasks processed simultaneously)
+Optional: Set the limit for concurrent requests to the LLM (i.e., to control the number of tasks processed simultaneously by the LLM, this is helpful when running local models)
 ```bash
 export CONCURRENT_TASK_LIMIT=8
 ```
